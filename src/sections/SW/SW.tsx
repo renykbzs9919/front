@@ -32,19 +32,19 @@ function SW() {
       notificationsActions.push({
         options: {
           autoHideDuration: 4500,
-          content: <Alert severity="success">App is ready to work offline.</Alert>,
+          content: <Alert severity="success">La aplicación está lista para funcionar sin conexión.</Alert>,
         },
       });
     } else if (needRefresh) {
       notificationKey.current = notificationsActions.push({
-        message: 'New content is available, click on reload button to update.',
+        message: 'Hay nuevo contenido disponible, haga clic en el botón recargar para actualizar.',
         options: {
           variant: 'warning',
           persist: true,
           action: (
             <>
-              <Button onClick={() => updateServiceWorker(true)}>Reload</Button>
-              <Button onClick={close}>Close</Button>
+              <Button onClick={() => updateServiceWorker(true)}>Recargar</Button>
+              <Button onClick={close}>Cerrar</Button>
             </>
           ),
         },

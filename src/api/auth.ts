@@ -1,4 +1,5 @@
 import axios from './axios';
+import Cookies from 'js-cookie';
 
 // Define los tipos para las solicitudes y respuestas de usuario
 interface User {
@@ -34,3 +35,10 @@ export const loginRequest = async (user: Pick<User, 'email' | 'password'>) => {
   return axios.post<AuthResponse>('/users/login', user);
 };
 
+// Función para hacer logout
+export const logout = () => {
+
+  localStorage.removeItem('token');
+  Cookies.remove('token');
+
+};

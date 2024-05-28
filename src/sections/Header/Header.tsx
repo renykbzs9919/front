@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ThemeIcon from '@mui/icons-material/InvertColors';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,6 +9,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
+import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 import { FlexBox } from '@/components/styled';
 import { repository, title } from '@/config';
@@ -18,27 +21,41 @@ import useTheme from '@/store/theme';
 
 import { HotKeysButton } from './styled';
 import { getRandomJoke } from './utils';
+import { logout } from '../../api/auth'; // Asegúrate de que la ruta sea correcta
 
 function Header() {
   const [, sidebarActions] = useSidebar();
   const [theme, themeActions] = useTheme();
   const [, notificationsActions] = useNotifications();
   const [, hotKeysDialogActions] = useHotKeysDialog();
+  const [isCookiePresent, setIsCookiePresent] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get('token'); // Reemplaza 'nombreDeTuCookie' con el nombre real de la cookie
+    if (token) {
+      setIsCookiePresent(true);
+    }
+  }, []);
 
   function showNotification() {
     notificationsActions.push({
       options: {
-        // Show fully customized notification
-        // Usually, to show a notification, you'll use something like this:
-        // notificationsActions.push({ message: ... })
-        // `message` accepts string as well as ReactNode
-        // If you want to show a fully customized notification, you can define
-        // your own `variant`s, see @/sections/Notifications/Notifications.tsx
         variant: 'customNotification',
       },
       message: getRandomJoke(),
     });
   }
+
+  const handleLogout = () => {
+    logout();
+    Swal.fire({
+      icon: 'success',
+      title: 'Logout Exitoso',
+      text: 'Has cerrado sesión correctamente.',
+    }).then(() => {
+      window.location.reload();
+    });
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }} data-pw={`theme-${theme}`}>
@@ -60,18 +77,20 @@ function Header() {
             </Button>
           </FlexBox>
           <FlexBox>
-            <FlexBox>
-              <Tooltip title="Hot keys" arrow>
-                <HotKeysButton
-                  size="small"
-                  variant="outlined"
-                  aria-label="open hotkeys dialog"
-                  onClick={hotKeysDialogActions.open}
-                >
-                  alt + k
-                </HotKeysButton>
-              </Tooltip>
-            </FlexBox>
+            {isCookiePresent && (
+              <FlexBox>
+                <Tooltip title="Logout" arrow>
+                  <HotKeysButton
+                    size="small"
+                    variant="outlined"
+                    aria-label="logout"
+                    onClick={handleLogout}
+                  >
+                    Cerrar Sesion
+                  </HotKeysButton>
+                </Tooltip>
+              </FlexBox>
+            )}
             <Divider orientation="vertical" flexItem />
             <Tooltip title="It's open source" arrow>
               <IconButton color="info" size="large" component="a" href={repository} target="_blank">

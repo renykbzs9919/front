@@ -44,6 +44,7 @@ function Login() {
 
       if (Cookies.get('token')) {
         navigate('/');
+        window.location.reload(); // Add this line to refresh the page
       }
     } catch (err: any) {
       Swal.fire({
