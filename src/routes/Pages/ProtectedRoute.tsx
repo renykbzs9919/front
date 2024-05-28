@@ -7,7 +7,7 @@ const isAuthenticated = () => {
 };
 
 const ProtectedRoute: React.FC = () => {
-  return isAuthenticated() ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthenticated() ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

@@ -18,7 +18,7 @@ function Pages() {
             key={path}
             path={path}
             element={
-              !isProtected || isAuthenticated() ? <Component /> : <Navigate to="/login" />
+              !isProtected || isAuthenticated() ? <Component /> : <Navigate to="/" />
             }
           />
         ))}
