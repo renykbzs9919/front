@@ -31,7 +31,7 @@ export const registerRequest = async (user: User) => {
 };
 
 // Función para hacer login
-export const loginRequest = async (user: Pick<User, 'email' | 'password'>) => {
+export const login = async (user: Pick<User, 'email' | 'password'>) => {
   return axios.post<AuthResponse>('/users/login', user);
 };
 

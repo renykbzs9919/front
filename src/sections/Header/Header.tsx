@@ -14,7 +14,6 @@ import Swal from 'sweetalert2';
 
 import { FlexBox } from '@/components/styled';
 import { repository, title } from '@/config';
-import useHotKeysDialog from '@/store/hotkeys';
 import useNotifications from '@/store/notifications';
 import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
@@ -27,7 +26,6 @@ function Header() {
   const [, sidebarActions] = useSidebar();
   const [theme, themeActions] = useTheme();
   const [, notificationsActions] = useNotifications();
-  const [, hotKeysDialogActions] = useHotKeysDialog();
   const [isCookiePresent, setIsCookiePresent] = useState(false);
 
   useEffect(() => {
