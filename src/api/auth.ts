@@ -27,12 +27,12 @@ interface AuthResponse {
 
 // Función para registrar un usuario
 export const registerRequest = async (user: User) => {
-  return axios.post<AuthResponse>('/users/register', user);
+  return axios.post<AuthResponse>('/logout', user);
 };
 
 // Función para hacer login
 export const login = async (user: Pick<User, 'email' | 'password'>) => {
-  return axios.post<AuthResponse>('/users/login', user);
+  return axios.post<AuthResponse>('/login', user);
 };
 
 // Función para hacer logout
